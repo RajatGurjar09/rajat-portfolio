@@ -10,7 +10,7 @@ const projects = [
     command: "./run-devops-ai.sh",
 
     description:
-      "AI-powered DevOps engineering platform combining Linux automation, infrastructure monitoring, troubleshooting assistance, and intelligent operations workflows.",
+      "AI-powered DevOps engineering platform currently under development, focused on Linux automation, infrastructure monitoring, troubleshooting assistance, and intelligent operations workflows.",
 
     status: "Active Development",
 
@@ -28,7 +28,7 @@ const projects = [
 
     stars: 0,
 
-    commits: "Current Project",
+    commits: "Active Development",
 
     architecture: [
       "AI Agents",
@@ -37,11 +37,8 @@ const projects = [
       "CI/CD",
     ],
 
-    github: "#",
-
-    demo: "#",
+    github: "https://github.com/RajatGurjar09/project-phoenix",
   },
-
 
   {
     title: "Enterprise AWS Infrastructure",
@@ -49,7 +46,7 @@ const projects = [
     command: "terraform apply",
 
     description:
-      "Designed AWS infrastructure using Terraform modules covering networking, compute, security, database, scaling, and cloud automation components.",
+      "Infrastructure-as-Code project implementing AWS cloud infrastructure with Terraform modules for networking, compute, security, database, scaling, and cloud automation.",
 
     status: "Infrastructure Ready",
 
@@ -64,9 +61,9 @@ const projects = [
       "CloudWatch",
     ],
 
-    stars: 40,
+    stars: 0,
 
-    commits: "40+ AWS Services",
+    commits: "Terraform Infrastructure",
 
     architecture: [
       "VPC",
@@ -75,11 +72,8 @@ const projects = [
       "Database",
     ],
 
-    github: "#",
-
-    demo: "#",
+    github: "https://github.com/RajatGurjar09/aws-terraform-3tier",
   },
-
 
   {
     title: "Cloud Native E-Commerce Platform",
@@ -87,7 +81,7 @@ const projects = [
     command: "kubectl apply -f deployment.yaml",
 
     description:
-      "Microservices-based e-commerce platform deployed using Docker and Kubernetes with service communication, container orchestration, and monitoring.",
+      "Cloud-native microservices e-commerce platform deployed with Docker and Kubernetes, demonstrating container orchestration, service communication, health monitoring, and production-style operations.",
 
     status: "Deployment Ready",
 
@@ -100,58 +94,52 @@ const projects = [
       "Grafana",
     ],
 
-    stars: 11,
+    stars: 0,
 
-    commits: "11 Microservices",
+    commits: "Kubernetes Deployment",
 
     architecture: [
       "Frontend",
-      "Backend",
-      "Services",
-      "Database",
+      "Microservices",
+      "Service Communication",
+      "Redis",
     ],
 
-    github: "#",
-
-    demo: "#",
+    github: "https://github.com/RajatGurjar09/online-boutique-devops",
   },
 
-
   {
-    title: "QR Smart Billing & UPI Payment System",
+    title: "Linux Automation Toolkit",
 
-    command: "mvn spring-boot:run",
+    command: "./system-health.sh",
 
     description:
-      "Full-stack billing application with QR-based billing, invoice generation, inventory management, payment workflow, and backend API services.",
+      "Practical Linux automation scripts for system administration, server health checks, resource monitoring, troubleshooting, maintenance, and repetitive operational tasks.",
 
     status: "Completed",
 
     stack: [
-      "Java",
-      "Spring Boot",
-      "PostgreSQL",
-      "REST API",
-      "Maven",
+      "Linux",
+      "Bash",
+      "Shell Scripting",
+      "System Administration",
+      "Automation",
     ],
 
-    stars: 8,
+    stars: 0,
 
-    commits: "Production Build",
+    commits: "Automation Scripts",
 
     architecture: [
-      "Billing",
-      "Inventory",
-      "Payments",
-      "Database",
+      "Health Checks",
+      "Monitoring",
+      "Automation",
+      "Maintenance",
     ],
 
-    github: "#",
-
-    demo: "#",
+    github: "https://github.com/RajatGurjar09/linux-automation-scripts",
   },
 ];
-
 
 export default function Projects() {
   return (
@@ -159,13 +147,9 @@ export default function Projects() {
       id="projects"
       className="relative overflow-hidden bg-zinc-950 py-24 text-white"
     >
-
       <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-cyan-400/40 to-transparent" />
 
-
       <div className="mx-auto max-w-7xl px-6">
-
-
         <motion.div
           initial={{
             opacity: 0,
@@ -182,70 +166,46 @@ export default function Projects() {
             duration: 0.6,
           }}
         >
-
           <p className="font-mono text-sm uppercase tracking-[0.3em] text-cyan-400">
             Projects
           </p>
-
 
           <h2 className="mt-4 text-4xl font-bold md:text-5xl">
             Engineering Work
           </h2>
 
-
           <p className="mt-4 max-w-2xl text-zinc-400">
             Hands-on projects focused on cloud infrastructure,
-            automation, Kubernetes, DevOps engineering, and AI-powered systems.
+            automation, Kubernetes, DevOps engineering, Linux
+            administration, and AI-powered systems.
           </p>
-
-
         </motion.div>
 
-
-
         <div className="mt-12 grid gap-8 md:grid-cols-2">
-
-
           {projects.map((project, index) => (
-
             <motion.div
               key={project.title}
-
               initial={{
                 opacity: 0,
                 y: 40,
               }}
-
               whileInView={{
                 opacity: 1,
                 y: 0,
               }}
-
               viewport={{
                 once: true,
               }}
-
               transition={{
                 duration: 0.5,
                 delay: index * 0.15,
               }}
             >
-
-              <ProjectCard
-                {...project}
-              />
-
+              <ProjectCard {...project} />
             </motion.div>
-
           ))}
-
-
         </div>
-
-
       </div>
-
-
     </section>
   );
 }

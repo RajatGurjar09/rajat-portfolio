@@ -4,11 +4,9 @@ type ProjectCardProps = {
   command: string;
   status: string;
   stack: string[];
-  stars: number;
   commits: string;
   architecture: string[];
   github?: string;
-  demo?: string;
 };
 
 export default function ProjectCard({
@@ -17,11 +15,9 @@ export default function ProjectCard({
   command,
   status,
   stack,
-  stars,
   commits,
   architecture,
   github,
-  demo,
 }: ProjectCardProps) {
   return (
     <div className="group h-full overflow-hidden rounded-2xl border border-zinc-800 bg-zinc-900/40 transition-all duration-300 hover:-translate-y-2 hover:border-cyan-400/40 hover:shadow-2xl hover:shadow-cyan-500/10">
@@ -105,41 +101,26 @@ export default function ProjectCard({
               </p>
 
               <p className="mt-1 font-mono text-sm text-green-400">
-                ● {status}
+                <span aria-hidden="true">●</span> {status}
               </p>
             </div>
 
             <div className="text-right font-mono text-xs text-zinc-500">
-              <p>★ {stars}</p>
-
-              <p className="mt-1">
-                {commits}
-              </p>
+              <p>{commits}</p>
             </div>
 
           </div>
 
-          {/* Action Buttons */}
-          <div className="mt-6 flex gap-3">
-
+          {/* GitHub Button */}
+          <div className="mt-6">
             <a
               href={github ?? "#"}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex-1 rounded-lg border border-zinc-700 px-4 py-2 text-center text-sm font-medium transition hover:border-cyan-400 hover:text-cyan-300"
+              className="block w-full rounded-lg border border-zinc-700 px-4 py-2 text-center text-sm font-medium transition hover:border-cyan-400 hover:text-cyan-300"
             >
-              GitHub
+              View GitHub Repository
             </a>
-
-            <a
-              href={demo ?? "#"}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex-1 rounded-lg bg-cyan-500 px-4 py-2 text-center text-sm font-semibold text-black transition hover:bg-cyan-400"
-            >
-              Live Demo
-            </a>
-
           </div>
 
         </div>

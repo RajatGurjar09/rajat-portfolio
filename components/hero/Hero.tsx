@@ -70,347 +70,227 @@ const terminalSequence = [
   "All critical services active ✓",
 ];
 
-
 const quickDelayLines = new Set([
   "",
   "Authentication successful.",
 ]);
 
-
 export default function Hero() {
-
-  const [
-    visibleLines,
-    setVisibleLines,
-  ] = useState<string[]>([]);
-
-
-  const [
-    activeLine,
-    setActiveLine,
-  ] = useState("");
-
-
-  const [
-    lineIndex,
-    setLineIndex,
-  ] = useState(0);
-
-
-  const [
-    characterIndex,
-    setCharacterIndex,
-  ] = useState(0);
-
-
+  const [visibleLines, setVisibleLines] = useState<string[]>([]);
+  const [activeLine, setActiveLine] = useState("");
+  const [lineIndex, setLineIndex] = useState(0);
+  const [characterIndex, setCharacterIndex] = useState(0);
 
   useEffect(() => {
-
     if (lineIndex >= terminalSequence.length) {
       return;
     }
 
-
     const currentLine = terminalSequence[lineIndex];
 
-
     if (characterIndex >= currentLine.length) {
+      const timeout = window.setTimeout(
+        () => {
+          setVisibleLines((prev) => [
+            ...prev,
+            currentLine,
+          ]);
 
-      const timeout = window.setTimeout(() => {
+          setActiveLine("");
 
-        setVisibleLines((prev) => [
-          ...prev,
-          currentLine,
-        ]);
+          setLineIndex((prev) => prev + 1);
 
-        setActiveLine("");
-
-        setLineIndex((prev) => prev + 1);
-
-        setCharacterIndex(0);
-
-      }, quickDelayLines.has(currentLine) ? 250 : 450);
-
+          setCharacterIndex(0);
+        },
+        quickDelayLines.has(currentLine) ? 250 : 450
+      );
 
       return () => clearTimeout(timeout);
-
     }
 
+    const timeout = window.setTimeout(
+      () => {
+        setActiveLine(
+          currentLine.slice(
+            0,
+            characterIndex + 1
+          )
+        );
 
-
-    const timeout = window.setTimeout(() => {
-
-      setActiveLine(
-        currentLine.slice(
-          0,
-          characterIndex + 1
-        )
-      );
-
-
-      setCharacterIndex(
-        (prev) => prev + 1
-      );
-
-
-    }, currentLine.startsWith("$") ||
-      currentLine.startsWith(">") 
-        ? 45 
-        : 22);
-
-
+        setCharacterIndex(
+          (prev) => prev + 1
+        );
+      },
+      currentLine.startsWith("$") ||
+      currentLine.startsWith(">")
+        ? 45
+        : 22
+    );
 
     return () => clearTimeout(timeout);
-
-
-  }, [
-    characterIndex,
-    lineIndex,
-  ]);
-
-
+  }, [characterIndex, lineIndex]);
 
   return (
+    <section
+      id="home"
+      className="relative isolate flex min-h-screen items-center overflow-hidden bg-zinc-950 px-4 py-24 text-white sm:px-6"
+    >
+      {/* Background Glow */}
+      <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top_left,rgba(6,182,212,0.20),transparent_35%),radial-gradient(circle_at_bottom_right,rgba(34,197,94,0.12),transparent_30%)]" />
+
+      <div className="mx-auto grid w-full max-w-7xl items-center gap-10 xl:grid-cols-2 xl:gap-12">
+
+        {/* LEFT — Hero Content */}
+        <motion.div
+          initial={{
+            opacity: 0,
+            y: 30,
+          }}
+          animate={{
+            opacity: 1,
+            y: 0,
+          }}
+          transition={{
+            duration: 0.6,
+          }}
+        >
+          <p className="text-xs uppercase tracking-[0.25em] text-cyan-400 sm:text-sm sm:tracking-[0.3em]">
+            Linux Systems · Cloud · DevOps · AI
+          </p>
+
+          <h1 className="mt-5 text-4xl font-bold sm:text-5xl md:text-6xl">
+            Rajat Gurjar
+          </h1>
+
+          <p className="mt-6 max-w-xl text-base leading-7 text-zinc-400 sm:text-lg sm:leading-8">
+            Linux System Administrator and DevOps Engineer
+            building reliable infrastructure, automating
+            operations, and designing cloud-native platforms.
+          </p>
+
+          <div className="mt-8 flex flex-wrap gap-3">
+
+            {/* Projects */}
+            <a
+              href="#projects"
+              className="flex items-center gap-2 rounded-md bg-cyan-500 px-5 py-3 font-semibold text-black transition hover:bg-cyan-400"
+            >
+              <FolderKanban className="h-4 w-4" />
+              Projects
+            </a>
+
+            {/* Resume */}
+            <a
+              href="/resume/Rajat-Gurjar-Resume.pdf"
+              download
+              className="flex items-center gap-2 rounded-md border border-zinc-700 px-5 py-3 transition hover:border-cyan-400 hover:text-cyan-300"
+            >
+              <ArrowDownToLine className="h-4 w-4" />
+              Resume
+            </a>
+
+            {/* Contact */}
+            <a
+              href="#contact"
+              className="flex items-center gap-2 rounded-md border border-green-500/40 px-5 py-3 text-green-300 transition hover:border-green-400 hover:text-green-200"
+            >
+              <Mail className="h-4 w-4" />
+              Contact
+            </a>
+
+          </div>
+        </motion.div>
+
+        {/* RIGHT — Terminal */}
+        <motion.div
+          initial={{
+            opacity: 0,
+            scale: 0.95,
+          }}
+          animate={{
+            opacity: 1,
+            scale: 1,
+          }}
+          transition={{
+            duration: 0.7,
+          }}
+        >
+          <div className="overflow-hidden rounded-xl border border-zinc-800 bg-black shadow-2xl">
+
+            {/* Terminal Header */}
+            <div className="flex items-center justify-between border-b border-zinc-800 bg-zinc-900 px-4 py-3">
+
+              <div className="flex gap-2">
+                <span className="h-3 w-3 rounded-full bg-red-400" />
+                <span className="h-3 w-3 rounded-full bg-yellow-400" />
+                <span className="h-3 w-3 rounded-full bg-green-400" />
+              </div>
+
+              <div className="flex items-center gap-2 font-mono text-xs text-zinc-400">
+                <Terminal className="h-4 w-4" />
+                rajat@devops:~
+              </div>
+
+            </div>
 
-<section
-id="home"
-className="relative isolate flex min-h-screen items-center overflow-hidden bg-zinc-950 px-6 py-24 text-white"
->
+            {/* Terminal Body */}
+            <div className="p-4 font-mono text-xs leading-6 sm:p-6 sm:text-sm sm:leading-7">
 
+              {visibleLines.map((line, index) => (
+                <TerminalLine
+                  key={`${index}-${line}`}
+                  line={line}
+                />
+              ))}
 
-<div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top_left,rgba(6,182,212,0.20),transparent_35%),radial-gradient(circle_at_bottom_right,rgba(34,197,94,0.12),transparent_30%)]"
-/>
+              <TerminalLine
+                line={activeLine}
+                cursor
+              />
 
+            </div>
 
+          </div>
+        </motion.div>
 
-<div className="mx-auto grid max-w-7xl items-center gap-12 lg:grid-cols-2">
-
-
-<motion.div
-initial={{
-opacity:0,
-y:30,
-}}
-animate={{
-opacity:1,
-y:0,
-}}
-transition={{
-duration:0.6,
-}}
->
-
-
-<p className="text-sm uppercase tracking-[0.3em] text-cyan-400">
-
-Linux Systems · Cloud · DevOps · AI
-
-</p>
-
-
-
-<h1 className="mt-5 text-5xl font-bold md:text-6xl">
-
-Rajat Gurjar
-
-</h1>
-
-
-
-<p className="mt-6 max-w-xl text-lg leading-8 text-zinc-400">
-
-Linux System Administrator and DevOps Engineer building
-reliable infrastructure, automating operations, and
-designing cloud-native platforms.
-
-</p>
-
-
-
-<div className="mt-8 flex flex-wrap gap-3">
-
-
-<a
-href="#projects"
-className="flex items-center gap-2 rounded-md bg-cyan-500 px-5 py-3 font-semibold text-black hover:bg-cyan-400"
->
-
-<FolderKanban className="h-4 w-4"/>
-
-Projects
-
-</a>
-
-
-
-<a
-href="/resume/Rajat-Gurjar-Resume.pdf"
-download
-className="flex items-center gap-2 rounded-md border border-zinc-700 px-5 py-3"
->
-
-<ArrowDownToLine className="h-4 w-4"/>
-
-Resume
-
-</a>
-
-
-
-<a
-href="#contact"
-className="flex items-center gap-2 rounded-md border border-green-500/40 px-5 py-3 text-green-300"
->
-
-<Mail className="h-4 w-4"/>
-
-Contact
-
-</a>
-
-
-</div>
-
-
-</motion.div>
-
-
-
-
-
-<motion.div
-initial={{
-opacity:0,
-scale:0.95,
-}}
-animate={{
-opacity:1,
-scale:1,
-}}
-transition={{
-duration:0.7,
-}}
->
-
-
-<div className="overflow-hidden rounded-xl border border-zinc-800 bg-black shadow-2xl">
-
-
-<div className="flex items-center justify-between border-b border-zinc-800 bg-zinc-900 px-4 py-3">
-
-
-<div className="flex gap-2">
-
-<span className="h-3 w-3 rounded-full bg-red-400"/>
-
-<span className="h-3 w-3 rounded-full bg-yellow-400"/>
-
-<span className="h-3 w-3 rounded-full bg-green-400"/>
-
-</div>
-
-
-
-<div className="flex items-center gap-2 font-mono text-xs text-zinc-400">
-
-<Terminal className="h-4 w-4"/>
-
-rajat@devops:~
-
-</div>
-
-
-</div>
-
-
-
-<div className="min-h-[430px] p-6 font-mono text-sm leading-7">
-
-
-{visibleLines.map((line,index)=>(
-
-<TerminalLine
-key={index}
-line={line}
-/>
-
-))}
-
-
-
-<TerminalLine
-line={activeLine}
-cursor
-/>
-
-
-</div>
-
-
-
-</div>
-
-
-
-</motion.div>
-
-
-
-</div>
-
-
-</section>
-
+      </div>
+    </section>
   );
 }
 
-
-
 function TerminalLine({
-line,
-cursor=false,
-}:{
-line:string;
-cursor?:boolean;
-}){
+  line,
+  cursor = false,
+}: {
+  line: string;
+  cursor?: boolean;
+}) {
+  const command =
+    line.startsWith("$") ||
+    line.startsWith(">");
 
+  return (
+    <p
+      className={`min-h-6 whitespace-pre-wrap sm:min-h-7 ${
+        command
+          ? "text-cyan-300"
+          : "text-zinc-300"
+      }`}
+    >
+      {line}
 
-const command =
-line.startsWith("$") ||
-line.startsWith(">");
-
-
-return (
-
-<p
-className={`min-h-7 whitespace-pre-wrap ${
-command
-? "text-cyan-300"
-: "text-zinc-300"
-}`}
->
-
-{line}
-
-
-{cursor && (
-
-<motion.span
-animate={{
-opacity:[1,0,1],
-}}
-transition={{
-duration:.8,
-repeat:Infinity,
-}}
-className="ml-1 inline-block h-5 w-2 bg-green-400"
-/>
-
-)}
-
-
-</p>
-
-);
-
+      {cursor && (
+        <motion.span
+          animate={{
+            opacity: [1, 0, 1],
+          }}
+          transition={{
+            duration: 0.8,
+            repeat: Infinity,
+          }}
+          className="ml-1 inline-block h-4 w-2 bg-green-400 align-middle sm:h-5"
+        />
+      )}
+    </p>
+  );
 }
